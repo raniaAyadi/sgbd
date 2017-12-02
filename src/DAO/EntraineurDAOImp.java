@@ -13,7 +13,7 @@ public class EntraineurDAOImp implements EntraineurDAO{
 	public static final String SQL_CONSULTER_BY_NUMLICENSE = "select * from entraineur,coordonnees where entraineur.id_coordonnees=coordonnees.id_coordonnees and num_license =? ;" ;
 	
 	@Override
-	public void create(Entraineur entraineur) {
+	public void create(Entraineur entraineur) throws ExceptionDAO {
 		Connection c = UtileDAO.etablirConnexion();
 		PreparedStatement p = null;
 		p = UtileDAO.initialiserRequete(c, false , SQL_CREATE, entraineur.getNum_license());
@@ -31,7 +31,7 @@ public class EntraineurDAOImp implements EntraineurDAO{
 	}
 
 	@Override
-	public List<Entraineur> findAll() {
+	public List<Entraineur> findAll() throws ExceptionDAO {
 		Connection c = UtileDAO.etablirConnexion();
 		PreparedStatement p ;
 		p = UtileDAO.initialiserRequete(c, false, SQL_CONSULTER , null);
@@ -63,7 +63,7 @@ public class EntraineurDAOImp implements EntraineurDAO{
 	}
 
 	@Override
-	public Entraineur findByNumLicense(String num_license) {
+	public Entraineur findByNumLicense(String num_license) throws ExceptionDAO{
 		Connection c = UtileDAO.etablirConnexion();
 		PreparedStatement p = null ;
 		ResultSet result = null ;

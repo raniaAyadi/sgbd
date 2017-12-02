@@ -7,37 +7,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoordonneesDAOImp implements CoordonneesDAO {
+public class ResponsableDAOImp implements ResponsableDAO {
 
-	public static final String SQL_CREATE = "insert into coordonnees (nom,prenom,adresse,date_naissance) values(?,?,?,?) ;" ;
-	public static final String SQL_CONSULTER = "select * from coordonnees ;" ;
-	public static final String SQL_CONSULTER_BY_NOM = "select * from coordonnees where nom = ? ;" ;
-	public static final String SQL_FIND_BY_ID ="select * from coordonnees where id= ?;";
+	public static final String SQL_CREATE = "insert into responsable();" ;
+	public static final String SQL_CONSULTER  ="select * from responsable INNER JOIN coordonnees on responsable.id_coordonnees=coordonnees.id_coordonnees ;" ;
+	public static final String SQL_FIND_BY_ID ="select * from responsable where id = ? ;" ;
+
 	@Override
-	public void create(Coordonnees coordonnees) throws ExceptionDAO {
+	public void create(Responsable responsable) throws ExceptionDAO {
 		Connection c = UtileDAO.etablirConnexion();
 		PreparedStatement p = null;
-		p = UtileDAO.initialiserRequete(c, false, SQL_CREATE, coordonnees.getNom(),coordonnees.getPrenom(), coordonnees.getAdresse(), coordonnees.getDate_naissance());
-
+		
+		p = UtileDAO.initialiserRequete(c, false, SQL_CREATE, null);//on va mettre quoii !!
+		new CoordonneesDAOImp().create(responsable);
+		//la fonctionnalit� !!! 
+		
 		try {
 			int resultat = p.executeUpdate();
-		} catch (SQLException e) {
+		}
+		catch(SQLException e) {
 			throw new ExceptionDAO("Erreur dans l'éxécutin du requete sql", e);
 		}
 		finally {
-			UtileDAO.fermeture(c,p);
+			UtileDAO.fermeture(c, p);
 		}
-	
 
 	}
 
 	@Override
-	public List<Coordonnees> findAll() throws ExceptionDAO{
+	public List<Responsable> findAll() throws ExceptionDAO {
 		Connection c = UtileDAO.etablirConnexion();
 		PreparedStatement p ;
 		p = UtileDAO.initialiserRequete(c, false, SQL_CONSULTER , null);
 		ResultSet result = null ;
-		List<Coordonnees> l = null ;
+		List<Responsable> l = null ;
 		
 		try {
 			result = p.executeQuery();
@@ -46,11 +49,11 @@ public class CoordonneesDAOImp implements CoordonneesDAO {
 		    throw new ExceptionDAO("Erreur dans l'éxécution du requet préparée", e);
 		}
 		
-		l = new ArrayList<Coordonnees>();
+		l = new ArrayList<Responsable>();
 		try {
 			while(result.next()) {
-				Coordonnees co = (Coordonnees) UtileDAO.mapping(result, Coordonnees.class.getName());
-				l.add(co);
+				Responsable res = (Responsable) UtileDAO.mapping(result, Responsable.class.getName());
+				l.add(res);
 			}
 		} catch (SQLException e) {
 			throw new ExceptionDAO("Erreur dans la récuppération du resuletSet", e);
@@ -60,15 +63,15 @@ public class CoordonneesDAOImp implements CoordonneesDAO {
 		}
 		if(l.isEmpty()) l = null ;
 		return l;
-}
+	}
 
 	@Override
-	public Coordonnees findByNom(String nom) throws ExceptionDAO {
+	public Responsable findByID(Integer id) throws ExceptionDAO {
 		Connection c = UtileDAO.etablirConnexion();
 		PreparedStatement p = null ;
 		ResultSet result = null ;
-		Coordonnees  co = null ;
-		p = UtileDAO.initialiserRequete(c, false, SQL_CONSULTER_BY_NOM, nom);
+		Responsable res = null ;
+		p = UtileDAO.initialiserRequete(c, false, SQL_FIND_BY_ID, id);
 		
 		try {
 			result = p.executeQuery();
@@ -79,15 +82,14 @@ public class CoordonneesDAOImp implements CoordonneesDAO {
 		
 		try {
 			if(result.next()) 
-				co = (Coordonnees) UtileDAO.mapping(result,Coordonnees.class.getName());
-			else co = null ;
+			res  = (Responsable) UtileDAO.mapping(result,Responsable.class.getName());
+			else res = null ;
 		} catch (SQLException e) {
 			throw new ExceptionDAO("Erreur dans la r�cup�ration  du resuletSet", e);
 			}
 		finally {
 			UtileDAO.fermeture(c, p, result);
 		}
-		return co ;
+		return res ;
 	}
-
 }

@@ -19,10 +19,10 @@ public class Championnat {
 	private Date date_fin ; // **NOT NULL **
 	
 	public Championnat() {
-		/*this.id = null ;
+		this.id = null ;
 		this.niveau = null ;
 		this.date_debut = null ;
-		this.date_fin = null ;*/
+		this.date_fin = null ;
 	}
 
 	public Championnat(String niveau, Date date_debut, Date date_fin) {

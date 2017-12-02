@@ -10,38 +10,41 @@ import java.util.List;
 
 public class ChampionnatDAOImp implements ChampionnatDAO {
 
-	public  static final String SQL_CREER = "insert into championnat"
+	private static final String SQL_CREER = "insert into championnat"
 			                        +"(niveau,date_debut,date_fin)"
 			                        +"values(?,?,?)";
 	
-	public  static final String SQL_CONSULTER = "select *"
+	private static final String SQL_CONSULTER = "select *"
 			                                  + "from championnat ; " ;
 	
-	public static final String SQL_CONSULTER_NIVEAU = "select * "
+	private static final String SQL_CONSULTER_NIVEAU = "select * "
 			                                         + "from championnat "
 			                                         + "where niveau = ? ;" ;  
 	
-	public static final String SQL_CONSULTER_DATE_DEBUT = "select * "
+	private static final String SQL_CONSULTER_DATE_DEBUT = "select * "
 			                                             + "from championnat "
 			                                             + "where date_debut = ? ;" ;
 	
-	public static final String SQL_CONSULTER_DATE_FIN = "select * "
+	private static final String SQL_CONSULTER_DATE_FIN = "select * "
                                                          + "from championnat "
                                                          + "where date_fin = ? ;" ;
 	
-	public static final String SQL_CONSULTER_APRES_DATE_DEBUT = "select * "
+	private static final String SQL_CONSULTER_APRES_DATE_DEBUT = "select * "
 			                                                    + "from championnat "
 			                                                    + "where datediff(date_debut,?) >= 0 ;" ;
 	
-	public static final String SQL_CONSULTER_AVANT_DATE_FIN =    "select * "
+	private static final String SQL_CONSULTER_AVANT_DATE_FIN =    "select * "
                                                                 + "from championnat "
                                                                 + "where datediff(date_fin,?) <= 0 ;" ;
 	
 	
-	public static final String SQL_CONSULTER_ENTRE =        "select * "
+	private static final String SQL_CONSULTER_ENTRE =        "select * "
 			                                               + "from championnat "
 			                                               + "where datediff(date_debut,?) >= 0 "
 			                                               + "and datediff(date_fin,?) <= 0 ;" ;
+	
+	
+	public static final String SQL_FIND_BY_ID ="select * from championnat where id= ?;";
 	
 	public ChampionnatDAOImp() {
 		super();
@@ -276,5 +279,34 @@ public class ChampionnatDAOImp implements ChampionnatDAO {
 		if(l.isEmpty()) l = null ;
 		return l;
 	}
+
+	@Override
+	public Championnat findById(Integer id) throws ExceptionDAO {
+		Connection c = UtileDAO.etablirConnexion();
+		PreparedStatement p = null ;
+		ResultSet result = null ;
+		Championnat ch = null ;
+		
+		p = UtileDAO.initialiserRequete(c, false, SQL_FIND_BY_ID, id);
+		try {
+			result = p.executeQuery();
+		} catch (SQLException e) {
+			UtileDAO.fermeture(c, p, result);
+		    throw new ExceptionDAO("Erreur dans l'éxécution du requet préparée", e);
+		}
+		
+		try {
+			if(result.next()) ch =(Championnat) UtileDAO.mapping(result,Championnat.class.getName());
+			else ch = null ;
+		} catch (SQLException e) {
+			throw new ExceptionDAO("Erreur dans la récuppération du resuletSet", e);
+			}
+		finally {
+			UtileDAO.fermeture(c, p, result);
+		}
+		return ch ;
+	}
+
+	
 
 }

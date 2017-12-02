@@ -7,7 +7,7 @@ public class Categorie {
 	/*
 	 * Proriètées 
 	 */
-	private Long id ; //Clé primaire ** ni accessible que par lecture **
+	private Integer id ; //Clé primaire ** ni accessible que par lecture **
 	private String niveau ; //Exp : Cadé , Junior , etc ** NOT NULL ** UNIQUE **
 	
 	/*
@@ -29,7 +29,7 @@ public class Categorie {
 	 * id : lecture sulement
 	 */
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -43,7 +43,15 @@ public class Categorie {
 	}
 	
 	//package
-	void setId(Long id) {
+	void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public void setNiveau(Object niveau) {
+		this.niveau = (String) niveau ;
+	}
+	
+	public void setId(Object id) {
+		this.id = (Integer) id ;
 	}
 }

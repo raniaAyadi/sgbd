@@ -7,4 +7,5 @@ public interface CoordonneesDAO {
 	void create (Coordonnees coordonnees);
 	List<Coordonnees> findAll(); 
 	Coordonnees findByNom(String niveau); 
+	
 }
