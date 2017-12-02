@@ -2,11 +2,12 @@ package services;
 
 import java.util.List;
 
-import entities.Match;
+
+import entities.ServiceResponse;
 
 public class MatchService {
 
-	public List<Match> getMatches(){
+	public ServiceResponse getMatches(){
 		return null;
 	}
 	

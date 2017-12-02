@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/matches")
 public class MatchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
+	
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -26,10 +28,13 @@ public class MatchController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		request.setAttribute("active", "matches");
+		request.setAttribute("header_message", "SQL: SELECT * FROM matches;");
+		request.setAttribute("green_button", "Ajouter un match");
+		// set sql,description,table content: using the serviceResponse 
 		
-		
-		request.getRequestDispatcher("matche.jsp").forward(request, response);
+		request.getRequestDispatcher("crud.jsp").forward(request, response);
 	
 	}
 

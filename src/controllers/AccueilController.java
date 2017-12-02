@@ -28,8 +28,9 @@ public class AccueilController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		// set attributes
-		
+		// needed to highlight the current page in the side-bar
+		request.setAttribute("active", "accueil");
+		request.setAttribute("header_message", "Projet SGBD");
 		request.getRequestDispatcher("accueil.jsp").forward(request, response);
 	}
 

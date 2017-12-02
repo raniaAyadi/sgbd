@@ -8,7 +8,7 @@
   <head>
 
 
-    <title>projet sgbd</title>
+  <title>Projet SGBD</title>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,9 +17,24 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
   
-  
 
   </head>
+
+<!-- load current active page -->
+<script>
+var currentActivePage = <%	
+	String s = (String) request.getAttribute("active");
+	if(s == null){
+		out.println("null");
+	}else{
+		out.println( "\"" + s +  "\"" );
+	}
+%>;
+$(document).ready(function(){
+    $("#" + currentActivePage).addClass(" active");
+});
+</script>
+
 
 
 
@@ -27,48 +42,45 @@
 
     <!-- Navigation -->
     <div class="container">
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Projet SGBD</a>
-    </div>
-    <ul class="nav navbar-nav">
-    </ul>
-  </div>
-
-</nav>
+    <div style="height:25px"></div>
+		<div class="well">${header_message}</div>
   </div>
 
 
 
     <!-- Page Content -->
     <div class="container">
-<div style="height:35px;"></div>
+<div style="height:25px;"></div>
      <div class="row">
-
         <div class="col-lg-3">
           <div class="list-group">
-            <a href="accueil" class="list-group-item active">Accueil</a>
-            <a href="matches" class="list-group-item">Matches</a>
-            <a href="#" class="list-group-item">Clubs</a>
-            <a href="#" class="list-group-item">Responsables</a>
-            <a href="#" class="list-group-item">Joueurs</a>
-            <a href="#" class="list-group-item">Entraîneurs</a>
-            <a href="#" class="list-group-item">Saisons</a>
-            <a href="#" class="list-group-item">Statistiques</a>
-
+            <a href="accueil" class="list-group-item" id="accueil">Accueil</a>
+            <a href="matches" class="list-group-item" id="matches">Matches</a>
+            <a href="clubs" class="list-group-item" id="clubs" >Clubs</a>
+            <a href="responsables" class="list-group-item" id="responsables" >Responsables</a>
+            <a href="equipes" class="list-group-item" id="equipes" >Equipes</a>
+            <a href="joueurs" class="list-group-item" id="joueurs" >Joueurs</a>
+            <a href="entraineurs" class="list-group-item" id="entraineurs" >Entraîneurs</a>
+            <a href="championnats" class="list-group-item" id="championnats" >Championnats</a>
+            <a href="statistiques" class="list-group-item" id="statistiques" >Statistiques</a>
           </div>
         </div>
         <!-- /.col-lg-3 -->
-
         <div class="col-lg-9">
+        <style>
+        	.upper_part button{
+        		float:right;
+        		heigth:30px;
+        		margin-right:6px;
+    
+        	}
+        </style>
+  
+				
 			<jsp:doBody/>
+            
         </div>
         <!-- /.col-lg-9 -->
-
-      
-
-
 
 </div>
 <div style="height:50px;"></div>
