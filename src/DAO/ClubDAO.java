@@ -14,6 +14,7 @@ public interface ClubDAO {
 	
 	//Selection par un champ unique
 	Club findByLabel(String label);
+	Club findById(Integer id);
 	
 	List<Club> findAllAfterDateCreation (Integer year);
 }

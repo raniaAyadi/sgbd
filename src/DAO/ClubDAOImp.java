@@ -17,7 +17,7 @@ public class ClubDAOImp implements ClubDAO {
 	public static final String SQL_CONSULTER_BY_LABEL ="select * from club where label = ? ;";
 	
 	public static final String SQL_FIND_AFTER_YEAR = "select * from club where dateyear(date_creation) >= ? ;";
-	
+	public static final String SQL_FIND_BY_ID ="select * from club where id= ?;";
 	
 	
 	@Override
@@ -100,7 +100,7 @@ public class ClubDAOImp implements ClubDAO {
 	}
 
 	@Override
-	public List<Club> findAllAfterDateCreation(Integer year) {
+	public List<Club> findAllAfterDateCreation(Integer year) throws ExceptionDAO{
 		Connection c = UtileDAO.etablirConnexion();
 		PreparedStatement p = UtileDAO.initialiserRequete(c, false, SQL_FIND_AFTER_YEAR, year);
 		ResultSet r = null ;
@@ -125,6 +125,34 @@ public class ClubDAOImp implements ClubDAO {
 		if(l.isEmpty()) return null ;
 		return l ;
 		
+	}
+
+	@Override
+	public Club findById(Integer id) throws ExceptionDAO{
+		Connection c = UtileDAO.etablirConnexion();
+		PreparedStatement p = null ;
+		ResultSet result = null ;
+		Club cl = null ;
+		p = UtileDAO.initialiserRequete(c, false, SQL_FIND_BY_ID, id);
+		
+		try {
+			result = p.executeQuery();
+		} catch (SQLException e) {
+			UtileDAO.fermeture(c, p, result);
+		    throw new ExceptionDAO("Erreur dans l'éxécution du requet prÃ©parÃ©e", e);
+		}
+		
+		try {
+			if(result.next()) 
+				cl = (Club) UtileDAO.mapping(result,Club.class.getName());
+			else cl = null ;
+		} catch (SQLException e) {
+			throw new ExceptionDAO("Erreur dans la récupération  du resuletSet", e);
+			}
+		finally {
+			UtileDAO.fermeture(c, p, result);
+		}
+		return cl ;
 	}
 	
 
