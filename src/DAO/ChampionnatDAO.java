@@ -14,7 +14,7 @@ public interface ChampionnatDAO {
 	
 	//Selection par un champ unique
 	Championnat findByNiveau(String niveau);
-	
+	Championnat findById(Integer id); 
 	
 	//Selection par des dates
 	List<Championnat> findAllByDateDebut(Date dateDebut);
