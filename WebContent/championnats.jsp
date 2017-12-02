@@ -4,9 +4,10 @@
 <t:wrapper>
 
 
+
       <div class="row" style="margin-bottom:10px;"> 
 		<div class="upper_part">
-		<button type="button" class="btn btn-success">${green_button}</button>
+		<button type="button" class="btn btn-success" onclick="redirect('/sgbd/update?EC=1&update&id=3')" >${green_button}</button>
 		</div>
 		</div>
 
@@ -31,10 +32,10 @@
   
   <c:forEach items="${all}" var="line">
   <tr>
-  	<td>${ line.getId()}</td>
+  	<td>${line.getId()}</td>
   	<td>${line.getNiveau()}</td>
-  	<td>${ line.getDate_debut()}</td>
-  	<td>${line.getDate_fin() }</td>
+  	<td>${line.getDate_debut()}</td>
+  	<td>${line.getDate_fin()}</td>
   	</tr>
   </c:forEach>  
   </tbody>

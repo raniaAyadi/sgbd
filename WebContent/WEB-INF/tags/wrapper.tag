@@ -33,8 +33,11 @@ var currentActivePage = <%
 $(document).ready(function(){
     $("#" + currentActivePage).addClass(" active");
 });
-</script>
 
+function redirect(url){
+	window.location.href = url;
+}
+</script>
 
 
 
